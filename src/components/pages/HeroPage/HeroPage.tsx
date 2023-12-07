@@ -38,7 +38,7 @@ export default function HeroPage({ }: Props) {
                         </div>
                     </div>
                 </div>
-                <div className="flex justify-end mt-20 w-3/5">
+                <div className="flex justify-end w-3/5">
                     <img
                         src={HeroImage}
                         alt="hero"
