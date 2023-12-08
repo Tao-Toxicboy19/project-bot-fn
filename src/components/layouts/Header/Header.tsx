@@ -32,12 +32,12 @@ export default function Header({ }: Props) {
                 <Logo />
 
                 <div className="my-auto">
-                    <button className="bg-primaryText text-text rounded-2xl font-bold flex my-auto px-5 pb-2 pt-1.5 text-lg hover:bg-divider duration-200 hover:text-primaryText group">
+                    {/* <button className="bg-primaryText text-text rounded-2xl font-bold flex my-auto px-5 pb-2 pt-1.5 text-lg hover:bg-divider duration-200 hover:text-primaryText group">
                         LOGIN
                         <span className="my-auto pl-2 text-lg transition-transform group-hover:translate-x-3 duration-300 ">
                             <FaArrowRight />
                         </span>
-                    </button>
+                    </button> */}
                 </div>
             </div>
         </nav>
