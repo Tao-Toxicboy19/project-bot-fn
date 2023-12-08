@@ -52,7 +52,7 @@ export const logout = (navigate: NavigateFunction) => async (dispatch: Dispatch)
     try {
         localStorage.removeItem(TOKEN);
         dispatch(setRemoveToken());
-        navigate('/login')
+        navigate('/')
         alert(LOGOUT)
     } catch (error) {
         throw error;

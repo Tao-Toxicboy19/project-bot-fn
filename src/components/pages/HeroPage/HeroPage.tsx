@@ -13,12 +13,15 @@ import { useSelector } from "react-redux"
 function FormLogin({ handleClose }: { handleClose: () => void }) {
   const [form] = Form.useForm();
   const dispatch = useAppDispatch()
+  const navigate = useNavigate()
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const onFinish = async (values: FieldType) => {
     try {
       await dispatch(loginAsync(values))
       setIsSubmitting(true)
+      navigate('/order')
+      handleCancel()
     } catch (error) {
       setIsSubmitting(false)
     }

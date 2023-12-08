@@ -14,7 +14,7 @@ export default function App({ }: Props) {
 
   useEffect(() => {
     dispatch(restoreLogin())
-  }, [])
+  }, []);
 
   return (
     <div >

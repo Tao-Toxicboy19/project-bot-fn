@@ -7,5 +7,5 @@ type Props = {}
 export default function PublicRoute({ }: Props) {
     const loginReducer = useSelector(loginSelector)
 
-    return (loginReducer.result?.accessToken) ? <Navigate to={'/order'} /> : <Outlet />
+    return (loginReducer.result?.accessToken) ? <Navigate to={'/'} /> : <Outlet />
 }
