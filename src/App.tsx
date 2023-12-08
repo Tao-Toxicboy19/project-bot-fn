@@ -6,6 +6,7 @@ import PrivateRoute from "./routes/PrivateRoute";
 import { useEffect } from "react";
 import { useAppDispatch } from "./store/store";
 import { restoreLogin } from "./store/slices/loginSlice";
+import ProfilePage from "./components/pages/ProfilePage/ProfilePage";
 
 type Props = {}
 
@@ -26,6 +27,7 @@ export default function App({ }: Props) {
 
           <Route element={<PrivateRoute />}>
             <Route path="/order" element={<OrderPage />} />
+            <Route path="/profile" element={<ProfilePage />} />
           </Route>
 
         </Routes>
