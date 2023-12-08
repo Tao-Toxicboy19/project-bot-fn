@@ -3,17 +3,25 @@ import HeroImage from "../../../assets/images/hero.jpg"
 import { FaArrowRight } from "react-icons/fa"
 import { useState } from "react"
 import { Button, Form, Input, Modal } from "antd"
+import { useAppDispatch } from "../../../store/store"
+import { loginAsync } from "../../../store/slices/loginSlice"
+import { FieldType } from "../../../type/user.type"
+import { useNavigate } from "react-router-dom"
 
-type FieldType = {
-  username?: string
-  password?: string
-}
 
 function FormLogin({ handleClose }: { handleClose: () => void }) {
   const [form] = Form.useForm();
+  const dispatch = useAppDispatch()
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const navigate = useNavigate()
 
-  const onFinish = (values:FieldType) => {
-    console.log('Success:', values)
+  const onFinish = async (values: FieldType) => {
+    try {
+      await dispatch(loginAsync(values))
+      setIsSubmitting(true)
+    } catch (error) {
+      setIsSubmitting(false)
+    }
   }
 
   const onFinishFailed = (errorInfo: any) => {
@@ -62,6 +70,8 @@ function FormLogin({ handleClose }: { handleClose: () => void }) {
             <Button
               className="w-2/4"
               htmlType="submit"
+              disabled={isSubmitting}
+              loading={isSubmitting}
             >
               Login
             </Button>

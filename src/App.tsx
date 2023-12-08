@@ -1,7 +1,9 @@
 import { Route, Routes } from "react-router-dom";
 import Header from "./components/layouts/Header/Header";
 import HeroPage from './components/pages/HeroPage/HeroPage';
-import LoginPage from "./components/pages/LoginPage/LoginPage";
+import OrderPage from "./components/pages/OrderPage/OrderPage";
+import PrivateRoute from "./routes/PrivateRoute";
+import PublicRoute from "./routes/PublicRoute";
 
 type Props = {}
 
@@ -12,8 +14,15 @@ export default function App({ }: Props) {
       <Header />
       <main>
         <Routes>
-          <Route path="/" element={<HeroPage />} />
-          <Route path="/login" element={<LoginPage />} />
+
+          <Route element={<PublicRoute />}>
+            <Route path="/" element={<HeroPage />} />
+          </Route>
+
+          <Route element={<PrivateRoute />}>
+            <Route path="/order" element={<OrderPage />} />
+          </Route>
+
         </Routes>
       </main>
     </div>
