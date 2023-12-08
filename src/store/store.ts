@@ -2,9 +2,11 @@ import { configureStore } from "@reduxjs/toolkit";
 import { useDispatch } from "react-redux";
 
 import loginReducer from "./slices/loginSlice";
+import roleReducer from "./slices/roleSlice";
 
 const reducer = {
     loginReducer,
+    roleReducer,
 };
 
 export const store = configureStore({

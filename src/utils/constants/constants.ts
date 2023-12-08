@@ -8,6 +8,7 @@ export const apiUrl = "http://localhost:8080/api";
 export const server = {
     LOGIN_URL: `auth/local/login`,
     REGISTER_URL: `auth/local/register`,
+    CURRENT_URL: `auth/local/current`,
 };
 
 export const OK = "OK";

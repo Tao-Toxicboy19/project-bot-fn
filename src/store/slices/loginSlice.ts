@@ -6,7 +6,7 @@ import { FieldType } from "../../type/user.type";
 import { NavigateFunction } from "react-router-dom";
 
 interface Token {
-    accessToken: string;
+    accessToken: string
 }
 
 type loginState = {
@@ -32,30 +32,30 @@ export const loginAsync = createAsyncThunk(
             }
             return result.data;
         } catch (error) {
-            throw error;
+            throw error
         }
     }
 );
 
 export const restoreLogin = () => async (dispatch: Dispatch) => {
     try {
-        const token = localStorage.getItem(TOKEN);
+        const token = localStorage.getItem(TOKEN)
         if (token) {
-            dispatch(setTokens({ accessToken: token }));
+            dispatch(setTokens({ accessToken: token }))
         }
     } catch (error) {
-        throw error;
+        throw error
     }
 }
 
 export const logout = (navigate: NavigateFunction) => async (dispatch: Dispatch) => {
     try {
-        localStorage.removeItem(TOKEN);
-        dispatch(setRemoveToken());
+        localStorage.removeItem(TOKEN)
+        dispatch(setRemoveToken())
         navigate('/')
         alert(LOGOUT)
     } catch (error) {
-        throw error;
+        throw error
     }
 }
 
@@ -64,29 +64,29 @@ const loginSlice = createSlice({
     initialState: initiaValues,
     reducers: {
         setTokens: (state: loginState, action: PayloadAction<Token>) => {
-            state.result = action.payload;
+            state.result = action.payload
         },
         setRemoveToken(state: loginState) {
             state.loading = false
-            state.result = null;
+            state.result = null
         }
     },
     extraReducers: (builder) => {
         builder.addCase(loginAsync.fulfilled, (state: loginState, action: PayloadAction<Token>) => {
-            state.result = action.payload;
-            state.loading = false;
+            state.result = action.payload
+            state.loading = false
             state.error = false
         });
 
         builder.addCase(loginAsync.rejected, (state: loginState) => {
-            state.result = null;
-            state.loading = false;
+            state.result = null
+            state.loading = false
             state.error = true
         });
 
         builder.addCase(loginAsync.pending, (state: loginState) => {
             state.result = null
-            state.loading = true;
+            state.loading = true
             state.error = false
         });
     },
