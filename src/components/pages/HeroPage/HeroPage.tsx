@@ -4,16 +4,16 @@ import { FaArrowRight } from "react-icons/fa"
 import { useState } from "react"
 import { Button, Form, Input, Modal } from "antd"
 import { useAppDispatch } from "../../../store/store"
-import { loginAsync } from "../../../store/slices/loginSlice"
+import { loginAsync, loginSelector } from "../../../store/slices/loginSlice"
 import { FieldType } from "../../../type/user.type"
 import { useNavigate } from "react-router-dom"
+import { useSelector } from "react-redux"
 
 
 function FormLogin({ handleClose }: { handleClose: () => void }) {
   const [form] = Form.useForm();
   const dispatch = useAppDispatch()
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const navigate = useNavigate()
 
   const onFinish = async (values: FieldType) => {
     try {
@@ -86,12 +86,15 @@ function ModalLogin() {
   const [open, setOpen] = useState(false)
   const handleOpen = () => setOpen(true)
   const handleClose = () => setOpen(false)
+  const loginReducer = useSelector(loginSelector)
+  const navigate = useNavigate()
 
   return (
     <>
       <button
-        onClick={handleOpen}
+        onClick={loginReducer.result?.accessToken ? () => navigate('/order') : handleOpen}
       >
+
         <motion.div
           className="bg-primaryText text-text hover:bg-divider hover:text-primaryText rounded-2xl flex my-auto px-5 pb-2 pt-1.5 text-xl group"
           initial={{ scale: 0 }}

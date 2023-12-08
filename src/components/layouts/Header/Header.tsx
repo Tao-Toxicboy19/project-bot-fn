@@ -1,6 +1,9 @@
 import { useTime, useTransform, motion } from "framer-motion";
 import { SiProbot } from "react-icons/si";
-import { FaArrowRight } from "react-icons/fa";
+import { Avatar } from "antd";
+import { UserOutlined } from '@ant-design/icons';
+import { useSelector } from "react-redux";
+import { loginSelector } from "../../../store/slices/loginSlice";
 
 function Logo() {
     const time = useTime();
@@ -25,20 +28,17 @@ function Logo() {
 type Props = {}
 
 export default function Header({ }: Props) {
+    const loginReducer = useSelector(loginSelector)
 
     return (
         <nav className="bg-darkPrimary h-20">
             <div className="container mx-auto flex flex-row justify-between">
                 <Logo />
-
-                <div className="my-auto">
-                    {/* <button className="bg-primaryText text-text rounded-2xl font-bold flex my-auto px-5 pb-2 pt-1.5 text-lg hover:bg-divider duration-200 hover:text-primaryText group">
-                        LOGIN
-                        <span className="my-auto pl-2 text-lg transition-transform group-hover:translate-x-3 duration-300 ">
-                            <FaArrowRight />
-                        </span>
-                    </button> */}
-                </div>
+                {loginReducer.result &&
+                    <div className="my-auto">
+                        <Avatar size={44} icon={<UserOutlined />} />
+                    </div>
+                }
             </div>
         </nav>
     )

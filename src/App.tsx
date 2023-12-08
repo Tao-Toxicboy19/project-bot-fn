@@ -3,11 +3,18 @@ import Header from "./components/layouts/Header/Header";
 import HeroPage from './components/pages/HeroPage/HeroPage';
 import OrderPage from "./components/pages/OrderPage/OrderPage";
 import PrivateRoute from "./routes/PrivateRoute";
-import PublicRoute from "./routes/PublicRoute";
+import { useEffect } from "react";
+import { useAppDispatch } from "./store/store";
+import { restoreLogin } from "./store/slices/loginSlice";
 
 type Props = {}
 
 export default function App({ }: Props) {
+  const dispatch = useAppDispatch()
+
+  useEffect(() => {
+    dispatch(restoreLogin())
+  }, [])
 
   return (
     <div >
@@ -15,9 +22,7 @@ export default function App({ }: Props) {
       <main>
         <Routes>
 
-          <Route element={<PublicRoute />}>
-            <Route path="/" element={<HeroPage />} />
-          </Route>
+          <Route path="/" element={<HeroPage />} />
 
           <Route element={<PrivateRoute />}>
             <Route path="/order" element={<OrderPage />} />

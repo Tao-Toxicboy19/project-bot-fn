@@ -1,8 +1,9 @@
-import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { Dispatch, PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../store";
-import { server, TOKEN } from "../../utils/constants/constants";
+import { LOGOUT, server, TOKEN } from "../../utils/constants/constants";
 import { httpClient } from "../../utils/httpClient";
 import { FieldType } from "../../type/user.type";
+import { NavigateFunction } from "react-router-dom";
 
 interface Token {
     accessToken: string;
@@ -36,23 +37,38 @@ export const loginAsync = createAsyncThunk(
     }
 );
 
+export const restoreLogin = () => async (dispatch: Dispatch) => {
+    try {
+        const token = localStorage.getItem(TOKEN);
+        if (token) {
+            dispatch(setTokens({ accessToken: token }));
+        }
+    } catch (error) {
+        throw error;
+    }
+}
+
+export const logout = (navigate: NavigateFunction) => async (dispatch: Dispatch) => {
+    try {
+        localStorage.removeItem(TOKEN);
+        dispatch(setRemoveToken());
+        navigate('/login')
+        alert(LOGOUT)
+    } catch (error) {
+        throw error;
+    }
+}
+
 const loginSlice = createSlice({
     name: 'login',
     initialState: initiaValues,
     reducers: {
-        logout: (state: loginState) => {
-            localStorage.removeItem(TOKEN);
-            state.result = null;
-            state.loading = false;
-            state.error = false;
-        },
         setTokens: (state: loginState, action: PayloadAction<Token>) => {
-            const token = localStorage.getItem(TOKEN);
-            if (token) {
-                state.result = action.payload;
-                state.loading = false;
-                state.error = false;
-            }
+            state.result = action.payload;
+        },
+        setRemoveToken(state: loginState) {
+            state.loading = false
+            state.result = null;
         }
     },
     extraReducers: (builder) => {
@@ -76,6 +92,6 @@ const loginSlice = createSlice({
     },
 })
 
-export const { logout, setTokens } = loginSlice.actions
+export const { setRemoveToken, setTokens } = loginSlice.actions
 export const loginSelector = (store: RootState) => store.loginReducer;
 export default loginSlice.reducer;
