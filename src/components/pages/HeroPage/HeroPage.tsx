@@ -12,7 +12,7 @@ type FieldType = {
 function FormLogin({ handleClose }: { handleClose: () => void }) {
   const [form] = Form.useForm();
 
-  const onFinish = (values: any) => {
+  const onFinish = (values:FieldType) => {
     console.log('Success:', values)
   }
 
