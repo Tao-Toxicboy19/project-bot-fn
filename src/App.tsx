@@ -7,6 +7,7 @@ import { useEffect } from "react";
 import { useAppDispatch } from "./store/store";
 import { restoreLogin } from "./store/slices/loginSlice";
 import ProfilePage from "./components/pages/ProfilePage/ProfilePage";
+import { roleAsync } from "./store/slices/roleSlice";
 
 type Props = {}
 
@@ -15,6 +16,7 @@ export default function App({ }: Props) {
 
   useEffect(() => {
     dispatch(restoreLogin())
+    dispatch(roleAsync())
   }, []);
 
   return (
