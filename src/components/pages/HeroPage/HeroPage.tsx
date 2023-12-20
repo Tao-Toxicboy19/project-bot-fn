@@ -8,6 +8,7 @@ import { loginAsync, loginSelector } from "../../../store/slices/loginSlice"
 import { FieldType } from "../../../type/user.type"
 import { useNavigate } from "react-router-dom"
 import { useSelector } from "react-redux"
+import { roleAsync } from "../../../store/slices/roleSlice"
 
 
 function FormLogin({ handleClose }: { handleClose: () => void }) {
@@ -18,8 +19,10 @@ function FormLogin({ handleClose }: { handleClose: () => void }) {
 
   const onFinish = async (values: FieldType) => {
     try {
-      await dispatch(loginAsync(values))
       setIsSubmitting(true)
+      await dispatch(loginAsync(values))
+      alert('login')
+      dispatch(roleAsync())
       navigate('/order')
       handleCancel()
     } catch (error) {

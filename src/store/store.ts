@@ -1,12 +1,16 @@
-import { configureStore } from "@reduxjs/toolkit";
-import { useDispatch } from "react-redux";
+import { configureStore } from "@reduxjs/toolkit"
+import { useDispatch } from "react-redux"
 
-import loginReducer from "./slices/loginSlice";
-import roleReducer from "./slices/roleSlice";
+import loginReducer from "./slices/loginSlice"
+import roleReducer from "./slices/roleSlice"
+import ordersReducer from "./slices/orderSlice"
+import ordersAddReducer from "./slices/orderAddSlice"
 
 const reducer = {
     loginReducer,
     roleReducer,
+    ordersReducer,
+    ordersAddReducer,
 };
 
 export const store = configureStore({

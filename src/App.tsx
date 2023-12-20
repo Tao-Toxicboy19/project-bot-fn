@@ -8,19 +8,24 @@ import { useAppDispatch } from "./store/store";
 import { restoreLogin } from "./store/slices/loginSlice";
 import ProfilePage from "./components/pages/ProfilePage/ProfilePage";
 import { roleAsync } from "./store/slices/roleSlice";
+import { TOKEN } from "./utils/constants/constants";
 
 type Props = {}
 
 export default function App({ }: Props) {
   const dispatch = useAppDispatch()
 
+  const token = localStorage.getItem(TOKEN)
+
   useEffect(() => {
     dispatch(restoreLogin())
-    dispatch(roleAsync())
-  }, []);
+    if (token) {
+      dispatch(roleAsync())
+    }
+  }, [])
 
   return (
-    <div >
+    <div>
       <Header />
       <main>
         <Routes>

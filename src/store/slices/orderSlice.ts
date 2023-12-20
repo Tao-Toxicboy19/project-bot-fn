@@ -3,30 +3,35 @@ import { RootState } from "../store";
 import { server, TOKEN } from "../../utils/constants/constants";
 import { httpClient } from "../../utils/httpClient";
 
-export type Payload = {
-    userId: string
-    keyId: string
-    username: string
-    role: string
-    iat: number
-    exp: number
+type Orders = {
+    id: string
+    symbol: string
+    amount: number
+    price: number
+    status: string
+    leverage: number
+    timeframe: string
+    created_at: Date
+    updated_at: Date
+    usersId: string
+    keysId: string
 }
 
-type roleState = {
-    result: Payload | null
+type ordersState = {
+    result: Orders[]
     loading: boolean
     error: boolean
 }
 
-const initiaValues: roleState = {
-    result: null,
+const initiaValues: ordersState = {
+    result: [],
     loading: false,
     error: false
 }
 
 
-export const roleAsync = createAsyncThunk(
-    'role/roleAsync',
+export const ordersAsync = createAsyncThunk(
+    'orders/ordersAsync',
     async () => {
         try {
             const token = localStorage.getItem(TOKEN)
@@ -35,8 +40,7 @@ export const roleAsync = createAsyncThunk(
                     Authorization: `Bearer ${token}`,
                 },
             }
-            const result = await httpClient.post<Payload>(server.CURRENT_URL, {}, config)
-            console.log(result.data)
+            const result = await httpClient.get<Orders[]>(server.ORDER_URL, config)
             return result.data
         } catch (error) {
             throw error
@@ -44,31 +48,31 @@ export const roleAsync = createAsyncThunk(
     }
 );
 
-const roleSlice = createSlice({
-    name: 'role',
+const ordersSlice = createSlice({
+    name: 'orders',
     initialState: initiaValues,
     reducers: {},
     extraReducers: (builder) => {
-        builder.addCase(roleAsync.fulfilled, (state: roleState, action: PayloadAction<Payload>) => {
+        builder.addCase(ordersAsync.fulfilled, (state: ordersState, action: PayloadAction<Orders[]>) => {
             state.result = action.payload
             state.loading = false
             state.error = false
         });
 
-        builder.addCase(roleAsync.rejected, (state: roleState) => {
-            state.result = null
+        builder.addCase(ordersAsync.rejected, (state: ordersState) => {
+            state.result = []
             state.loading = false
             state.error = true
         });
 
-        builder.addCase(roleAsync.pending, (state: roleState) => {
-            state.result = null
+        builder.addCase(ordersAsync.pending, (state: ordersState) => {
+            state.result = []
             state.loading = true
             state.error = false
         });
     },
 })
 
-export const { } = roleSlice.actions
-export const roleSelector = (store: RootState) => store.roleReducer;
-export default roleSlice.reducer;
+export const { } = ordersSlice.actions
+export const ordersSelector = (store: RootState) => store.ordersReducer;
+export default ordersSlice.reducer;
